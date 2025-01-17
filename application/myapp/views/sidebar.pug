@@ -1,0 +1,11 @@
+#offcanvasSidebar.offcanvas.offcanvas-start(tabindex='-1' aria-labelledby='offcanvasSidebarLabel')
+  .offcanvas-header
+    h5.offcanvasLabel.offcanvas-title Search History
+    button.btn-close(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+  .offcanvas-body
+    ul.list-group
+      if searchHistory && searchHistory.length
+        each history in searchHistory
+          li.list-group-item #{history.Search_query || 'No query available'} - #{history.Timestamp || 'No timestamp available'}
+      else
+        p No search history found.

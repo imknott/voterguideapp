@@ -1,0 +1,87 @@
+doctype html
+html(lang="en" data-bs-theme="dark")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/icons/bootstrap-icons.css")
+    link(rel="stylesheet" href="/stylesheets/style.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="/socket.io/socket.io.js")
+    script(type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js" charset="utf-8")
+    script(type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js" charset="utf-8")
+    script(type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" charset="utf-8")
+    script(type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" charset="utf-8")
+
+    style.
+      /* Optional: Blur effect for background when modal is open */
+      .modal-backdrop.show {
+        backdrop-filter: blur(5px);
+      }
+
+  body
+    if user
+      button.btn.btn-success.position-fixed.top-0.start-0.m-3(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasSidebar' aria-controls='offcanvasSidebar')
+        i.bi.bi-list Search History
+
+      include sidebar.pug
+
+      .dropdown.position-fixed.top-0.end-0.m-3
+        button#dropdownButton.btn.btn-success.rounded-pill(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+          | #{user.username}
+        ul.dropdown-menu(aria-labelledby='dropdownButton')
+          li
+            a.dropdown-item(href='/profile') Profile
+          li
+            a.dropdown-item(href='/settings') Settings
+          li
+            form#logoutForm(action='/logout' method='POST')
+              button.dropdown-item(type='submit') Logout
+          if user.role === 'Admin'
+            li.divider
+            li
+              a.dropdown-item(href='/candidate/new') New Candidate
+            if candidate
+              li.divider
+              li
+                form(action='/candidate/newEvent' method='GET')
+                  input(type='hidden' name='candidate_name' value=candidate[0].Name)
+                  input(type='hidden' name='candidate_id' value=candidate[0].Candidate_id)
+                  input(type='hidden' name='candidate_photo' value=candidate[0].Photo)
+                  button.dropdown-item(type='submit') New Event for #{candidate[0].Name}
+              li
+                form(action='/candidate/newPolicy' method='GET')
+                  input(type='hidden' name='candidate_name' value=candidate[0].Name)
+                  input(type='hidden' name='candidate_id' value=candidate[0].Candidate_id)
+                  input(type='hidden' name='candidate_photo' value=candidate[0].Photo)
+                  button.dropdown-item(type='submit') New Policy for #{candidate[0].Name}
+
+    else
+      a.btn.btn-success.rounded-pill.position-fixed.top-0.end-0.m-3(href='/auth/signup') Sign Up / Login
+
+    main
+      block content
+
+    footer.footer
+      p Class: CSC 648 | Section: 02 | Team: Team 3 |
+        a(href='/about', class='link-primary') About Us
+
+
+    if user
+      // Modal for location access
+      .modal.fade#locationModal(tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true")
+        .modal-dialog.modal-dialog-centered
+          .modal-content
+            .modal-header
+              h5.modal-title#locationModalLabel Allow Location Access?
+            .modal-body
+              p Would you like to share your location for a personalized experience? We can also use the address you provided during signup.
+            .modal-footer
+              button.btn.btn-primary(type='button' id='allowLocation') Yes, use my location
+              button.btn.btn-secondary(type='button' id='useSignupAddress') No, use my signup address
+
+   
+    script(src='/js/bootstrap.bundle.min.js')
+    script(src='/javascripts/toggleFields.js')
+    script(src='/javascripts/typingEffect.js')
+    script(src='/javascripts/ratings.js')

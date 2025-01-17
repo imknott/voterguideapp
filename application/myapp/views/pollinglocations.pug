@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  a(href='/search', class='btn btn-secondary mb-3 myNewclass position-sticky align-self-start') Back to Search
+  h1 Find Nearest Polling Station 🗳️
+  #map-container-wrapper
+    //- Map container
+    #map-container
+    
+    //- Polling station list
+    #polling-station-list
+      h2 Polling Stations Nearby
+      ul(id="polling-station-items")
+
+  //- Button for location
+  button(type='button' id='use-location' class='btn btn-light rounded-pill') Use My Location
+
+
+    script(src="/javascripts/locationprompt.js")

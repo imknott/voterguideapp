@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+  .container.my-5
+    .row.p-4.pb-0.pe-lg-0.pt-lg-5.align-items-center.rounded-3.border.shadow-lg
+      .col-lg-7.p-3.p-lg-5.pt-lg-3
+        h1.display-4.fw-bold.lh-1.text-body-emphasis Voting Guide &amp; AI
+        p.lead
+          | Finding candidates who fit and stand for what you believe is hard, but with this voting guide we make it easy. Using our search function, easily find candidates who stand for a specific topic. From one word to a list of phrases, we make choosing the right vote easier than ever.
+        .d-grid.gap-2.d-md-flex.justify-content-md-start.mb-4.mb-lg-3
+          a.btn.btn-primary.btn-lg.px-4.me-md-2.fw-bold(type='button' href='/views/features.html') Learn More.
+          a.btn.btn-outline-secondary.btn-lg.px-4(type='button' href='/views/about.html') About Us
+      .col-lg-4.offset-lg-1.p-0.overflow-hidden.shadow-lg
+        img.rounded-lg-3(src='/images/pexels-element5-1550337.jpg', alt='Description of image' width='720')
+  script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz' crossorigin='anonymous')

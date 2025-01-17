@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  .container
+    h1.text-center Profile
+
+    //- Political Party Preference Section
+    .section
+      h2 Political Party Preference
+      form(action='/profile/political-party' method='POST')
+        .form-group
+          label(for='partySelect') Select or Update Your Political Party
+          select#partySelect.form-control(name='party')
+            option(value='Democratic' selected=(currentParty === 'Democratic')) Democratic Party
+            option(value='Republican' selected=(currentParty === 'Republican')) Republican Party
+            option(value='Independent' selected=(currentParty === 'Independent')) Independent
+            option(value='Other' selected=(currentParty === 'Other')) Other
+        button.btn.btn-primary(type='submit') Update Preference
+
+    hr
+
+    //- Candidates with Live Chat
+    .section
+      h2 Candidates You Have Started a Live Chat With
+      ul.list-group
+        if liveChatCandidates.length
+          each candidate in liveChatCandidates
+            li.list-group-item
+              h5= candidate.name
+              p Location: #{candidate.location}
+        else
+          li.list-group-item No candidates to show.
+
+    hr
+
+    //- Candidates You Have Rated
+    .section
+      h2 Candidates You Have Rated
+      ul.list-group
+        if ratedCandidates.length
+          each candidate in ratedCandidates
+            li.list-group-item
+        else
+          li.list-group-item No candidates to show.

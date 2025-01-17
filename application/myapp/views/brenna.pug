@@ -1,0 +1,17 @@
+extends layout.pug
+
+block content
+    a(href='/search', class='btn btn-secondary mb-3 myNewclass position-sticky align-self-start') Back to Search
+
+    .container.text-center.mt-5
+        // Profile Image
+        img.rounded-circle.mx-auto.d-block(src='/images/image_1350.jpg' alt='Profile Image' style='width: 200px; height: 200px;')
+        // Description
+        h2.mt-3 Brenna Gilbert
+        p Team Lead
+        p Leading the team through the project life cycle by planning, scheduling, and tracking project progess.
+        // Social Media Links (Github,Linkedin)
+        .mt-4
+            a.btn.btn-primary(href='https://www.linkedin.com/in/brenna-gilbert-bba4a7172/' target='_blank') LinkedIn
+            a.btn.btn-primary(href='https://github.com/beegilbz' target='_blank')  Github
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz' crossorigin='anonymous')

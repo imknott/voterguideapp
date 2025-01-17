@@ -1,0 +1,93 @@
+extends layout.pug
+
+block content
+  a(href='/search', class='btn btn-secondary mb-3 myNewclass position-sticky align-self-start', style="top:60px;") Back to Search
+
+  .container-fluid
+    .row
+      // Candidate info section
+      .col-md-8
+        each data in candidate
+          .candidate-container.d-flex.mb-4.p-3.shadow-sm.bg-white.rounded
+            .candidate-info.col-md-8
+              .row
+                .col-md-4
+                  .image-container
+                    img(src=data.Photo, alt='Candidate Photo', class="img-fluid candidate-photo rounded-circle")
+                .col-md-8
+                  .name-title #{data.Name}
+                  .cd-information Background:
+                  p #{data.Background}
+                  .cd-information Location:
+                  p #{data.Location}
+                  .cd-information Website and Social Media:
+                  p
+                    a(href=data.Candidate_website, target="_blank", class="text-info") #{data.Candidate_website}
+                  if data.Social && data.Social.facebook
+                    p Facebook:
+                    a(href=`https://facebook.com/${data.Social.facebook}`, target="_blank", class="text-info") #{data.Social.facebook}
+                  if data.Social && data.Social.twitter
+                    p Twitter:
+                    a(href=`https://twitter.com/${data.Social.twitter}`, target="_blank", class="text-info") #{data.Social.twitter}
+
+                  // Star Rating Section
+                  .star-rating.mt-3
+                    include ratings.pug
+                  .rating-summary.mt-2
+
+                  // Policies Section
+                  .policies-section.col-md-4.col-12
+                    .cd-information Top Policies:
+                    ul.policies-list
+                      each policy in policies
+                        li= policy
+
+      // Live Chat Section
+      .col-md-4
+        .live-chat.bg-light.p-3.rounded.shadow-sm
+          .page-title Live Chat
+          .chat-container
+            #comments-container.chat-messages(aria-live="polite")
+              .row
+                if comments.length > 0
+                  each comment in comments
+                    .col-12.mb-3
+                      .d-flex.flex-column
+                        .d-flex.align-items-start
+                          .username= comment.Username
+                        .d-flex.justify-content-start
+                          .pill.pill-info.p-3.rounded.text-truncate
+                            .messages= comment.commentText
+                            small.timestamp.text-muted= comment.timestamp
+                else
+                  p No comments yet.
+            form#comment-form.chat-form(action="/candidate/set-comment" method="POST")
+              input(type="hidden", name="Candidate_id", value=candidate_id)
+              if user
+                input#comment-input(type="text" placeholder="Enter message..." name="message" class="chat-input form-control" required)
+                button(type="submit" class="btn btn-primary mt-2") Send
+              else
+                p Please login to comment.
+
+      // Videos Section
+    .row.mt-4
+      .col-12
+        if videos.length == 0
+          .page-title.text-center.text-secondary No video entry found
+        else
+          .page-title.text-center Videos
+          .video-scroll-container.overflow-auto.mt-3
+            .d-flex.flex-nowrap
+              each video in videos
+                .video-item.me-2
+                  iframe(
+                    width="200" 
+                    height="150" 
+                    src=`https://www.youtube.com/embed/${video.id.videoId}`
+                    title=`Video: ${video.snippet.title}`
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen
+                  )
+
+  script(src="/javascripts/comments.js", defer)

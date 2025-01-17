@@ -1,0 +1,22 @@
+form(action="/candidate/set-rating", method="POST")
+  .ratings-wrapper
+    .ratings(candidate-rating='#{data.Candidate_id}') 
+      span(data-rating='5') &starf;
+      span(data-rating='4') &starf;
+      span(data-rating='3') &starf;
+      span(data-rating='2') &starf;
+      span(data-rating='1') &starf;
+
+    // Hidden input to store the candidate ID
+    input(type="hidden", name="Candidate_id", value=data.Candidate_id)
+
+    // Hidden input to store the rating value
+    input(type="hidden", name="rating_value", id="ratingValue")
+
+    // Button to submit rating
+    button(type="submit", id="submitRatingBtn") Submit Rating
+
+    // Average rating display
+    .average-rating 
+      | Average Rating: 
+      span= ratings.averageRating || "Not rated yet"

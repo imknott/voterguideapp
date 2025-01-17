@@ -1,0 +1,43 @@
+extends layout.pug
+
+block content
+  a(href='/search', class='btn btn-secondary mb-3 myNewclass position-sticky align-self-start', style="top:60px;") Back to Search
+
+  h1 Search Results
+  if searchTerm
+    p You searched for: #{searchTerm}
+  else 
+    p No search term entered
+
+  if results.length === 0
+    h3 No results found
+
+  each entry in results
+    .card
+      .cd-name-title= entry.Name || entry.Party_name || entry.Event_name || entry.party_leader || "Unnamed Entry"
+
+      // Candidate Info
+      if entry.Name
+          .image-container
+            img(src=entry.Photo, alt='Candidate Photo', style="max-width: 100px; max-height: 100px")
+          .cd-information-small Location: #{entry.Location || 'N/A'}
+          .cd-information-small Rating: #{entry.Rating_value || 'N/A'}
+          form(method='get' action='/results/candidate' class='search-form')
+            input(type="hidden" name="Candidate_id" value=entry.Candidate_id)
+            button(type='submit' class='btn btn-light rounded-pill') More information
+
+      // Event Info
+      if entry.Event_name
+          p Event Name: #{entry.Event_name}
+          p Event Location: #{entry.event_location || 'N/A'}
+
+      // Policy Description
+      if entry.Policy_description
+          p Policy Description: #{entry.Policy_description || 'N/A'}
+
+      // Political Party Info
+      if entry.Party_name
+          .cd-information-small Party Name: #{entry.Party_name}
+          .cd-information-small Party Leader: #{entry.party_leader || 'N/A'}
+
+    br

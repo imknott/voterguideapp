@@ -1,0 +1,77 @@
+doctype html
+html(lang="en" data-bs-theme="dark")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title Voting Guide
+    link(rel='stylesheet' href='/icons/bootstrap-icons.css')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/signup.css')
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH' crossorigin='anonymous')
+
+  body
+    a(href='/search', class='btn btn-secondary mb-3 myNewclass') Back to Search
+
+    main
+      block content
+        .container.d-flex.flex-column.align-items-center.mt-1
+          .row.justify-content-center.w-100
+            .col-md-4
+
+              //- Display error alert if error exists
+              if error
+                .alert.alert-danger(role='alert')
+                  | !{error}
+
+              //- Toggle Switch to choose between Login and Sign Up
+              .d-flex.justify-content-center.mb-3
+                label.form-check-label(for='authSwitch')
+                  | Login
+                .form-check.form-switch
+                  input#authSwitch.form-check-input(type='checkbox', role='switch')
+                label.form-check-label(for='authSwitch')
+                  | Sign Up
+
+
+              //- Form for both Login and Sign Up
+              form#authForm(method='post' action='/auth/login')
+                .mb-3#loginfields()
+        
+                  label(for='email', class='form-label') Email address
+                  input#email.form-control(type='email' name='email' placeholder='Enter your email' required)
+
+                  label(for='password', class='form-label') Password
+                  input#password.form-control(type='password' name='password' placeholder='Enter your password' required)
+
+                //- Extra fields for Sign Up (initially hidden)
+                .mb-3#signupFields(style='display: none;')
+
+                  label(for='name', class='form-label') Full Name
+                  input#name.form-control(type='text' name='name' placeholder='Enter your full name')
+
+                  label(for='username', class='form-label') Username
+                  input#username.form-control(type='text' name='username' placeholder='Choose a username')
+
+                  label(for='address', class='form-label') Address
+                  input#address.form-control(type='text' name='address' placeholder='Enter your address')
+      
+                  .suggestions-dropdown#addressSuggestions
+
+                  label(for='dob', class='form-label') Date of Birth
+                  input#dob.form-control(type='date' name='dob')
+
+
+                  label(for='confirmPassword', class='form-label') Confirm Password
+                  input#confirmPassword.form-control(type='password' name='confirmPassword' placeholder='Confirm your password')
+
+                //- Centered Submit Button
+                .d-flex.justify-content-center
+                  button#submitBtn.btn.btn-custom-submit(type='submit') Login
+
+    footer.footer
+      p Class: CSC 648 | Section: 02 | Team: Team 3 |
+       a(href='/about', class='link-primary') About Us
+
+    script(src='/javascripts/toggleFields.js')
+    script(src='/javascripts/signupAlerts.js')
+    script(src='/javascripts/autocomplete.js')

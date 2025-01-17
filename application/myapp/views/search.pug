@@ -1,0 +1,26 @@
+extends layout.pug
+
+
+
+block content
+  
+  .content
+    h1#voting-guide
+    h2#ideal-candidate
+
+      // Only form and buttons, no container with background
+    form(method='get' action='/search/results' class='search-form')
+      .input-group.mb-3
+        input#searchTerm.form-control(type='text' name='searchTerm' placeholder='Enter a search term' aria-label='Search term')
+        small#charCountError.text-danger(style='display: none;') Maximum 40 alphanumeric characters allowed.        
+        button(type='submit' class='btn btn-light input-group-text' title='Search') 
+          i.bi.bi-search  
+          
+
+      // Category buttons
+      .search-category-buttons
+        a(href='/search/president' class='btn btn-light rounded-pill btn-category' title='Polling Station') Current President&nbsp;
+          i.bi.bi-newspaper
+        a(href='/search/election' class='btn btn-light rounded-pill btn-category' title='Polling Station') Get Election Info&nbsp;
+          i.bi.bi-info-circle
+        a(href='/polling' class='btn btn-light rounded-pill btn-category' title='Polling Station') Find Nearest Polling Station&nbsp;🗳️
